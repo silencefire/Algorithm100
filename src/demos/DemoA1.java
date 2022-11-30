@@ -22,7 +22,7 @@ import java.util.*;
 public class DemoA1 {
     public static void main(String[] args) {
         DemoA1  a = new DemoA1();
-        a.ti8();
+        a.ti9();
     }
     /**
      * @description:
@@ -45,7 +45,7 @@ public class DemoA1 {
         Scanner sc = new Scanner(System.in);
         String s = sc.nextLine();
         if(s.length()==0){
-            System.out.println("");;
+            System.out.println();
         }
         int o = 8-s.length()%8;
         while(s.length()>=8){
@@ -57,7 +57,7 @@ public class DemoA1 {
         while(sb.length()!=8 && sb.length()!=0){
             sb.append("0");
         }
-        System.out.println(sb.toString());
+        System.out.println(sb);
     }
     /** 
      * @description: 接受一个只包含小写字母的字符串，然后输出该字符串反转后的字符串。（字符串长度不超过1000）
@@ -71,7 +71,7 @@ public class DemoA1 {
         String s;
         while(sc.hasNext()){
             s = sc.nextLine();
-            System.out.println(new StringBuilder(s).reverse().toString());
+            System.out.println(new StringBuilder(s).reverse());
         }
     }
     /** 
@@ -108,7 +108,7 @@ public class DemoA1 {
         Integer min = Collections.min(values);
 
         for(Character c : hm.keySet()){
-            if(hm.get(c) == min){
+            if(Objects.equals(hm.get(c), min)){
                 s= s.replaceAll(c.toString(),"");
             }
         }
@@ -287,5 +287,15 @@ public class DemoA1 {
         }
         return res;
     }
-
+   /**
+    * @description:  将一个字符串str的内容颠倒过来，并输出。
+    * @author: zhenghm
+    * @time: 2022/11/30
+    */
+    private void ti9(){
+        Scanner sc = new Scanner(System.in);
+        String str = sc.nextLine();
+        StringBuilder sb = new StringBuilder(str);
+        System.out.println(sb.reverse());
+    }
 }
