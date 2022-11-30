@@ -22,7 +22,7 @@ import java.util.*;
 public class DemoA1 {
     public static void main(String[] args) {
         DemoA1  a = new DemoA1();
-        a.ti9();
+        a.ti10();
     }
     /**
      * @description:
@@ -297,5 +297,29 @@ public class DemoA1 {
         String str = sc.nextLine();
         StringBuilder sb = new StringBuilder(str);
         System.out.println(sb.reverse());
+    }
+    /**
+     * @description:  验证尼科彻斯定理，即：任何一个整数m的立方都可以写成m个连续奇数之和
+     * 原理就是等差序列：S(n) = n*a + n(n-1)d/2，已知S(n)是m的立方，n是项数即m，d是公差，是2，换算下来，就是
+     * 首项a = m^3/n-(n-1)，然后项数是n，每次+2,就能打印出所有数字；
+     * @author: zhenghm
+     * @time: 2022/11/30
+     */
+    private void ti10(){
+        Scanner sc = new Scanner(System.in);
+        int num = sc.nextInt();
+        int sum = (int)Math.pow(num,3);
+        int a = sum/num - (num-1);
+        StringBuilder sb = new StringBuilder();
+        for(int i=1;i<=num;i++){
+            sb.append(a);
+            if(i == num){
+                sb.append("=").append(sum);
+            }else{
+                sb.append("+");
+            }
+            a = a+2;
+        }
+        System.out.println(sb);
     }
 }
