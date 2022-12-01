@@ -22,7 +22,7 @@ import java.util.*;
 public class DemoA1 {
     public static void main(String[] args) {
         DemoA1  a = new DemoA1();
-        a.ti11();
+        a.ti14();
     }
     /**
      * @description:
@@ -343,5 +343,68 @@ public class DemoA1 {
             }
         }
         System.out.println(n);
+    }
+    /**
+     * @description: 求一个int类型数字对应的二进制数字中1的最大连续数，例如3的二进制为00000011，最大连续2个1
+     * 难点：Integer的toBinaryString的方法
+     * @author: zhenghm
+     * @time: 2022/12/1
+     */
+    private void ti12(){
+        Scanner sc = new Scanner(System.in);
+        int num = sc.nextInt();
+        String bStr = Integer.toBinaryString(num);
+        String[] bArrays = bStr.split("0");
+        int max = 0;
+        for(String s : bArrays){
+            max = Math.max(max,s.length());
+        }
+        System.out.println(max);
+    }
+
+    /**
+     * @description: 给定一个仅包含小写字母的字符串，求它的最长回文子串的长度。
+     * 所谓回文串，指左右对称的字符串。
+     * 所谓子串，指一个字符串删掉其部分前缀和后缀（也可以不删）的字符串
+     * 关键：思想：从字符串两边放置游标，循环验证；
+     * 验证回文的方法：用reverse就能轻易验证
+     * @author: zhenghm
+     * @time: 2022/12/1
+     */
+    private void ti13(){
+        Scanner sc = new Scanner(System.in);
+        String s = sc.nextLine();
+        int max = 0;
+        for(int i=0;i<s.length();i++){
+            for(int j=s.length();j>i;j--){
+                if(judgeOAOStr(s.substring(i,j))){
+                    max = Math.max(max,s.substring(i,j).length());
+                }
+            }
+        }
+        System.out.println(max);
+    }
+    private boolean judgeOAOStr(String s){
+        return s.equals(new StringBuilder(s).reverse().toString());
+    }
+
+    /**
+     * @description: 等差数列 2，5，8，11，14。。。。（从 2 开始的 3 为公差的等差数列）
+     * 输出求等差数列前n项和
+     * 可以使用等差数列公式，但是感觉没必要；
+     * 等差公式还是放上来：A(n)=a1 + (n-1)d
+     * @author: zhenghm
+     * @time: 2022/12/1
+     */
+    private void ti14(){
+        Scanner sc = new Scanner(System.in);
+        int num = sc.nextInt();
+        int a = 2;
+        int sum = 0;
+        for(int i=1;i<=num;i++){
+            sum = sum+a;
+            a = a+3;
+        }
+        System.out.println(sum);
     }
 }
