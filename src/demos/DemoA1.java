@@ -22,7 +22,7 @@ import java.util.*;
 public class DemoA1 {
     public static void main(String[] args) {
         DemoA1  a = new DemoA1();
-        a.ti10();
+        a.ti11();
     }
     /**
      * @description:
@@ -321,5 +321,27 @@ public class DemoA1 {
             a = a+2;
         }
         System.out.println(sb);
+    }
+    /**
+     * @description:  给定两个只包含小写字母的字符串，计算两个字符串的最大公共子串的长度。
+     * 解题思路：找到最短的字符串，前后游标相互移动，用string.contains方法判断是否为字串，再判断字串的长度；
+     * @author: zhenghm
+     * @time: 2022/12/1
+     */
+    private void ti11(){
+        Scanner sc = new Scanner(System.in);
+        String str1 = sc.nextLine();
+        String str2 = sc.nextLine();
+        String s1 = str1.length()>str2.length()?str2:str1;//短的串
+        String s2 = str1.length()>str2.length()?str1:str2;//长的串
+        int n = 0;//最大长度
+        for(int i=0;i<s1.length();i++){
+            for(int j=s1.length();j>i;j--){
+                if(s2.contains(s1.substring(i,j))){
+                    n = Math.max(n, s1.substring(i, j).length());
+                }
+            }
+        }
+        System.out.println(n);
     }
 }
