@@ -22,7 +22,7 @@ import java.util.*;
 public class DemoA1 {
     public static void main(String[] args) {
         DemoA1  a = new DemoA1();
-        a.ti14();
+        a.ti15();
     }
     /**
      * @description:
@@ -407,4 +407,101 @@ public class DemoA1 {
         }
         System.out.println(sum);
     }
+    /**
+     * @description:  密码按如下规则进行计分，并根据不同的得分为密码进行安全等级划分。
+     * switch在13之前是没办法使用的，所以用for来进行判断
+     * @author: zhenghm
+     * @time: 2022/12/2
+     * 例子：38$@NoNoN
+     * 问题：判断字符串的大小写，字母，数字，都可以用Character里的方法；
+     */
+    private void ti15(){
+        Scanner sc = new Scanner(System.in);
+        String str = sc.nextLine();
+        int num = 0;
+
+        /*判断长度分数*/
+        int strLength = str.length();
+        if(strLength>=8){
+            num += 25;
+        }else if(strLength>=5){
+            num += 10;
+        }else{
+            num += 5;
+        }
+        /*
+        * 判断字母分数
+        * 判断数字分数
+        * 判断符号分数
+        */
+        char[] chars = str.toCharArray();
+        int letterNum = 0;//字母个数
+        int digitNum = 0;//数字个数
+        boolean digitAndLetter = false;
+        for(char c : chars){
+            if(Character.isLetter(c)){
+                letterNum++;
+            }
+            if(Character.isDigit(c)){
+                digitNum++;
+            }
+        }
+        if(letterNum>0){
+            if(str.toLowerCase().equals(str)){
+                num += 10;
+            }else{
+                num += 20;
+                digitAndLetter = true;
+            }
+        }
+        if(digitNum>1){
+            num += 20;
+        }else if(digitNum==1){
+            num += 10;
+        }
+        int symbolNum = str.length()-digitNum-letterNum;//符号个数
+        if(symbolNum>1){
+            num += 25;
+        }else if(symbolNum==1){
+            num += 10;
+        }
+
+        /*判断奖励分数*/
+        if(digitAndLetter && digitNum>0 && symbolNum>0){
+            num += 5;
+        }else if(letterNum>0 && digitNum>0 && symbolNum>0){
+            num += 3;
+        }else if(letterNum>0 && digitNum>0){
+            num +=2;
+        }
+        System.out.println(num);
+        System.out.println(getLevel(num));
+    }
+    private String getLevel(int num){
+        if(num>=90){
+            return "VERY_SECURE";
+        }else if(num>=80){
+            return "SECURE";
+        }else if(num>=70){
+            return "VERY_STRONG";
+        }else if(num>=60){
+            return "STRONG";
+        }else if(num>=50){
+            return "AVERAGE";
+        }else if(num>=25){
+            return "WEAK";
+        }else{
+            return "VERY_WEAK";
+        }
+    }
+
+    /**
+     * @description:  
+     * @author: zhenghm
+     * @time: 2022/12/2
+     */
+    private void ti16(){
+        
+    }
+
 }
