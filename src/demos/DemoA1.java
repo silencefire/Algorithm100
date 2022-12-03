@@ -22,7 +22,7 @@ import java.util.*;
 public class DemoA1 {
     public static void main(String[] args) {
         DemoA1  a = new DemoA1();
-        a.ti15();
+        a.ti19();
     }
     /**
      * @description:
@@ -496,12 +496,113 @@ public class DemoA1 {
     }
 
     /**
-     * @description:  
+     * @description:  计算字符串中含有的不同字符的个数
      * @author: zhenghm
      * @time: 2022/12/2
+     * 直接用set的元素不重复特性处理就可以；
      */
     private void ti16(){
-        
+        Scanner sc = new Scanner(System.in);
+        String str = sc.nextLine();
+        char[] chars = str.toCharArray();
+        Set<Character> sets = new HashSet<>();
+        for(char c : chars){
+            sets.add(c);
+        }
+        System.out.println(sets.size());
     }
 
+    /**
+     * @description:  输入一个字符串和一个整数 k ，截取字符串的前k个字符并输出
+     * @author: zhenghm
+     * @time: 2022/12/3
+     */
+    private void ti17(){
+        Scanner sc = new Scanner(System.in);
+        String str = sc.nextLine();
+        int num = sc.nextInt();
+        System.out.println(str.substring(0,num));
+    }
+
+    /**
+     * @description: 任意一个偶数（大于2）都可以由2个素数组成，组成偶数的2个素数有很多种情况，
+     * 本题目要求输出组成指定偶数的两个素数差值最小的素数对
+     * @author: zhenghm
+     * @time: 2022/12/3
+     *
+     * 分成两步：第一步判断素数，第二部穷举
+     * 问题：素数这里的判断卡住了，用取余%就能判断，但是循环的时候要比较的不是i<num，而是用i<=Math.sqrt(num)
+     * Math的abs绝对值的使用
+     */
+    private void ti18(){
+        Scanner sc = new Scanner(System.in);
+        int num = sc.nextInt();
+        int res = Integer.MAX_VALUE;
+        int[] values = new int[2];
+        for(int i=1;i<num;i=i+2){
+            if(isPrime(i) && isPrime(num-i)){
+                if(Math.abs(num-2*i)<res){
+                    res = Math.abs(num-2*i);
+                    values[0] = Math.min(i,num-i);
+                    values[1] = num-values[0];
+                }
+            }
+        }
+        System.out.println(values[0]);
+        System.out.println(values[1]);
+    }
+
+    /**
+     * 判断是否素数
+     * 注意这里比较的上限是num的平方根；
+     * 另外，不是i<Math.sqrt(num)，其中=的情况忘记算进去了；
+     */
+    private boolean isPrime(int num){
+        for(int i=2;i<=Math.sqrt(num);i++){
+            if(num%i == 0){
+                return false;
+            }
+        }
+        return true;
+    }
+
+    /**
+     * @description: 输入一行字符，分别统计出包含英文字母、空格、数字和其它字符的个数。
+     * @author: zhenghm
+     * @time: 2022/12/3
+     * 另外的做法：使用正则表达式
+     * 字母正则：([A-Z]+)|([a-z]+)
+     * 数字正则：[0-9]+
+     */
+    private void ti19(){
+        Scanner sc = new Scanner(System.in);
+        String str = sc.nextLine();
+        char[] chars = str.toCharArray();
+        int charNum = 0;//字母
+        int noNum = 0;//数字
+        int symbolNum = 0;//其他符号
+        for(char c : chars){
+            if(Character.isDigit(c)){
+                noNum++;
+            }else if(Character.isLetter(c)){
+                charNum++;
+            }else{
+                symbolNum++;
+            }
+        }
+        int nullNum = str.length()  - str.replaceAll(" ","").length();
+        System.out.println(charNum);
+        System.out.println(nullNum);
+        System.out.println(noNum);
+        System.out.println(symbolNum-nullNum);
+    }
+
+    /**
+     * @description: 给定 n 个字符串，请对 n 个字符串按照字典序排列。
+     * @author: zhenghm
+     * @time: 2022/12/3
+     */
+    private void ti20(){
+
+    }
 }
