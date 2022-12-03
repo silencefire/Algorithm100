@@ -22,7 +22,8 @@ import java.util.*;
 public class DemoA1 {
     public static void main(String[] args) {
         DemoA1  a = new DemoA1();
-        a.ti19();
+        a.compStrs(null);
+
     }
     /**
      * @description:
@@ -603,6 +604,37 @@ public class DemoA1 {
      * @time: 2022/12/3
      */
     private void ti20(){
+        Scanner sc = new Scanner(System.in);
+        int num = Integer.parseInt(sc.nextLine());
+        String[] strs = new String[num];
+        for(int i=0;i<num;i++){
+            strs[i] = sc.nextLine();
+        }
+        Arrays.sort(strs);
+        Arrays.stream(strs).forEach(System.out::println);
+    }
 
+    //如果自己实现比较器，这种做法可以推荐
+    //这里注意：从小到大，正序：o1-o2，从大到小，逆序：o2-o1
+    private void compStrs(){
+        List<String> strss = new ArrayList<>();
+        strss.add("fff");
+        strss.add("aaa");
+        strss.add("ccc");
+        strss.add("bbb");
+        strss.sort(new Comparator<String>() {
+            @Override
+            public int compare(String o1, String o2) {
+                for(int i=0;i<Math.min(o1.length(),o2.length());){
+                    if(o1.charAt(i)<o2.charAt(i)){
+                        return -1;
+                    }else{
+                        i++;
+                    }
+                }
+                return 1;
+            }
+        });
+        strs.stream().forEach(System.out::println);
     }
 }
