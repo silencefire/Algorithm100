@@ -22,7 +22,7 @@ import java.util.*;
 public class DemoA1 {
     public static void main(String[] args) {
         DemoA1  a = new DemoA1();
-        a.compStrs(null);
+        a.compStrs();
 
     }
     /**
@@ -632,9 +632,9 @@ public class DemoA1 {
                         i++;
                     }
                 }
-                return 1;
+                return 0;
             }
         });
-        strs.stream().forEach(System.out::println);
+        strss.forEach(System.out::println);
     }
 }
