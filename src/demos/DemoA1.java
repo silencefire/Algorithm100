@@ -22,8 +22,7 @@ import java.util.*;
 public class DemoA1 {
     public static void main(String[] args) {
         DemoA1  a = new DemoA1();
-        a.compStrs();
-
+        a.ti21();
     }
     /**
      * @description:
@@ -636,5 +635,19 @@ public class DemoA1 {
             }
         });
         strss.forEach(System.out::println);
+    }
+    
+    /**
+     * @description:  将16进制数转换为10进制
+     * @author: zhenghm
+     * @time: 2022/12/4
+     * 问题，其他进制转10进制的方法：使用parseInt的将其他进制的数据转换为10进制，字符串不能带进制标志；必须substring掉
+     * 10进制转其他进制，使用特定的toBinaryString，toHexString，toOctalString方法，或者toUnsignedString也可以，但是需要指定进制
+     * 本质：整数进制转换为题
+     */
+    private void ti21(){
+        Scanner sc = new Scanner(System.in);
+        String str = sc.nextLine();
+        System.out.println(Integer.parseInt(str.substring(2),16));
     }
 }
