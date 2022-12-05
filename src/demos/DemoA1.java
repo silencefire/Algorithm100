@@ -22,7 +22,7 @@ import java.util.*;
 public class DemoA1 {
     public static void main(String[] args) {
         DemoA1  a = new DemoA1();
-        a.ti21();
+        a.ti23();
     }
     /**
      * @description:
@@ -649,5 +649,69 @@ public class DemoA1 {
         Scanner sc = new Scanner(System.in);
         String str = sc.nextLine();
         System.out.println(Integer.parseInt(str.substring(2),16));
+    }
+
+    /**
+     * @description: 找出字符串中第一个只出现一次的字符，如果不存在输出-1
+     * @author: zhenghm
+     * @time: 2022/12/5
+     * 可以使用LinkedHashMap实现，也可以使用string的charAt和lastCharAt实现；
+     */
+    private void ti22(){
+        Scanner sc = new Scanner(System.in);
+        String str = sc.nextLine();
+        char[] chars = str.toCharArray();
+        Map<Character,Integer> maps = new LinkedHashMap<>(str.length());
+        for(char c : chars){
+            maps.put(c,maps.getOrDefault(c,0)+1);
+        }
+        boolean first = true;
+        for(Character c :maps.keySet()){
+            if(first && maps.get(c) == 1){
+                System.out.println(c);
+                first = false;
+            }
+        }
+        if(first){
+            System.out.println("-1");
+        }
+    }
+    
+    /**
+     * @description:  输入n个整数，找出其中最小的k个整数并按升序输出
+     * 输入： 第一行输入两个整数n和k，第二行输入一个整数数组
+     * 输出：从小到大输出最小的k个整数，用空格分开。
+     * @author: zhenghm
+     * @time: 2022/12/5
+     *
+     * 优化点：可以使用sc.nextInt替代sc.nextLine，这样就可以避免使用split方法
+     * 例如：int n = sc.nextInt();该方法是可以跨行识别的；
+     */
+    private void ti23(){
+        Scanner sc = new Scanner(System.in);
+        String str = sc.nextLine();
+        String[] ia1 = str.split(" ");
+        int n = Integer.parseInt(ia1[0]);
+        int k = Integer.parseInt(ia1[1]);
+
+        String str2 = sc.nextLine();
+        String[] ia2 = str2.split(" ");
+        int[] arrays = new int[ia2.length];
+        for(int i=0;i<arrays.length;i++){
+            arrays[i] = Integer.parseInt(ia2[i]);
+        }
+        Arrays.sort(arrays);
+        for(int j=0;j<k;j++){
+            System.out.print(arrays[j]+" ");
+        }
+    }
+
+    /**
+     * @description:
+     * @author: zhenghm
+     * @time: 2022/12/5
+     */
+    private void ti24(){
+
     }
 }
