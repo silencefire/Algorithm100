@@ -22,7 +22,7 @@ import java.util.*;
 public class DemoA1 {
     public static void main(String[] args) {
         DemoA1  a = new DemoA1();
-        a.ti23();
+        a.ti24();
     }
     /**
      * @description:
@@ -707,11 +707,43 @@ public class DemoA1 {
     }
 
     /**
-     * @description:
+     * @description: 判断短字符串S中的所有字符是否在长字符串T中全部出现。
+     * 输入两个字符串。第一个为短字符串，第二个为长字符串。两个字符串均由小写字母组成。
+     * 如果短字符串的所有字符均在长字符串中出现过，则输出字符串"true"。否则输出字符串"false"。
      * @author: zhenghm
      * @time: 2022/12/5
      */
     private void ti24(){
-
+        Scanner sc = new Scanner(System.in);
+        String str1 = sc.nextLine();
+        char[] chars = str1.toCharArray();
+        String str2 = sc.nextLine();
+        boolean res = true;
+        for(char c : chars){
+            if(!str2.contains(String.valueOf(c))){
+                res = false;
+            }
+        }
+        System.out.println(res);
     }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
