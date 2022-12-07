@@ -2,7 +2,6 @@ package demos;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Scanner;
 
 /**
  * 主要记录LeeCode中的相关题目，暂无分类
