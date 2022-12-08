@@ -56,5 +56,14 @@ public class DemoA2 {
         }
         return (m%n + ti1Method2(n-1,m))%n;//可以优化为(m+ti1Method2(n-1,m))%n，为了容易懂，就不简化了
     }
+    /**
+     * @description: 给定一个字符串 s ，请你找出其中不含有重复字符的 最长子串 的长度。
+     * 解题方法：滑窗法，
+     * @author: zhenghm
+     * @time: 2022/12/8
+     */
+    private void ti2(){
+
+    }
 
 }
