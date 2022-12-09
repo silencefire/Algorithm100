@@ -1,7 +1,10 @@
 package demos;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Stream;
 
 /**
  * 主要记录LeeCode中的相关题目，暂无分类
@@ -9,7 +12,7 @@ import java.util.List;
 public class DemoA2 {
     public static void main(String[] args) {
         DemoA2 d2 = new DemoA2();
-        d2.ti1();
+        d2.ti2();
     }
     /**
      * @description:  圆圈中最后剩下的数字
@@ -63,7 +66,28 @@ public class DemoA2 {
      * @time: 2022/12/8
      */
     private void ti2(){
-
+        //采用滑窗算法
+        System.out.println(getStringLength("tmmmzuxt"));
     }
 
+    /**
+     * 设置两个游标，一个start，一个end
+     * 一个思路：用start向后遍历，end随之变动，时间复杂度为O(N^2)
+     * 一个更好的思路：用end向后遍历，start不断调整，时间复杂度为O(N)，这里注意需要处理之前存在的数据：例如字符串为："tmmmzuxt"，
+     * 在校验的时候，需要校验其下表是否大于start，大于才有效；
+     */
+    private int getStringLength(String str){
+        int strMaxLength = 0,start=0,end=0;
+        Map<Character,Integer> maps = new HashMap<>();
+        for(;end<str.length();end++){
+            char c = str.charAt(end);
+            if(maps.containsKey(c) && maps.get(c)>=start){
+                start = maps.get(c)+1;
+            }else{
+                strMaxLength = Math.max(end-start+1,strMaxLength);
+            }
+            maps.put(c,end);
+        }
+        return strMaxLength;
+    }
 }
