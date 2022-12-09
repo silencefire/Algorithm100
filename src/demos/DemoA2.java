@@ -12,7 +12,8 @@ import java.util.stream.Stream;
 public class DemoA2 {
     public static void main(String[] args) {
         DemoA2 d2 = new DemoA2();
-        d2.ti2();
+        d2.ti3();
+        System.out.println("01234".substring(0,0));
     }
     /**
      * @description:  圆圈中最后剩下的数字
@@ -90,4 +91,57 @@ public class DemoA2 {
         }
         return strMaxLength;
     }
+
+    /**
+     * @description: 最长公共前缀
+     * 编写一个函数来查找字符串数组中的最长公共前缀。
+     * 如果不存在公共前缀，返回空字符串 ""
+     * 思路一：遍历第一个字符串，然后遍历其他字符串，查看是否startWith，但是效率低，时间复杂度O(N)【用时4ms】
+     * 思路二：遍历所有字符串，两两比较，每次比较出共同的前缀ans，然后ans再继续跟后面的字符串比较；这样ans的值就一直在减少；
+     * 注意这里用for的普通循环比用for-each循环要好得多；节省没必要的循环也很重要；巧用break打断循环；【用时1ms】
+     * @author: zhenghm
+     * @time: 2022/12/9
+     */
+    private void ti3(){
+        System.out.println("公共最长前缀："+longestCommonPrefix2(new String[]{"flower","flow","flight"}));
+    }
+    private String longestCommonPrefix1(String[] strs) {
+        char[] chars = strs[0].toCharArray();
+        StringBuilder sb = new StringBuilder();
+        String longestStr = "";
+        for (char aChar : chars) {
+            sb.append(aChar);
+            String temp = sb.toString();
+            boolean res = true;//表示都匹配
+            for (String s : strs) {
+                if (!s.startsWith(temp)) {
+                    res = false;
+                    break;
+                }
+            }
+            if (res) {
+                longestStr = temp;
+            }
+        }
+        return longestStr;
+    }
+    private String longestCommonPrefix2(String[] strs) {
+        String ans = strs[0];
+        for(int i=1;i<strs.length;i++){
+            int j=0;
+            for(;j<strs[i].length() && j<ans.length();j++){
+                boolean isSame = strs[i].charAt(j) == ans.charAt(j);
+                if(!isSame){
+                    break;
+                }
+            }
+            ans = ans.substring(0,j);
+            if("".equals(ans)){
+                return ans;
+            }
+        }
+        return ans;
+    }
+
+
 }
