@@ -1,9 +1,6 @@
 package demos;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Stream;
 
 /**
@@ -12,8 +9,7 @@ import java.util.stream.Stream;
 public class DemoA2 {
     public static void main(String[] args) {
         DemoA2 d2 = new DemoA2();
-        d2.ti3();
-        System.out.println("01234".substring(0,0));
+        d2.ti4();
     }
     /**
      * @description:  圆圈中最后剩下的数字
@@ -143,5 +139,35 @@ public class DemoA2 {
         return ans;
     }
 
-
+    /**
+     * @description:
+     * 给你一个字符串 s ，请你反转字符串中 单词 的顺序。
+     * 单词 是由非空格字符组成的字符串。s 中使用至少一个空格将字符串中的 单词 分隔开。
+     * 返回 单词 顺序颠倒且 单词 之间用单个空格连接的结果字符串。
+     *方法一：使用split，然后翻转
+     *方法二：参考官方解法，使用api：包括：字符串分数组split，数组转list，集合工具类的使用，String类的静态方法；
+     * 个人看了一些解法：发现没有特别好的，效率基本差不太多，都是O(N)，所以暂时没必要纠结用api还是自己手动写细节了；
+     * 注意：输入字符串 s中可能会存在前导空格、尾随空格或者单词间的多个空格。返回的结果字符串中，单词间应当仅用单个空格分隔，且不包含任何额外的空格。
+     * @author: zhenghm
+     * @time: 2022/12/10
+     */
+    private void ti4(){
+        System.out.println(reverseWords(" the sky is blue "));//注意这种前后都有空格的情况
+        System.out.println(reverseWords2(" the sky is blue "));
+    }
+    private String reverseWords(String s) {
+        String[] ss = s.trim().split("\\s+");
+        StringBuilder sb = new StringBuilder();
+        for(int i=ss.length-1;i>0;i--){
+            sb.append(ss[i]).append(" ");
+        }
+        sb.append(ss[0]);
+        return sb.toString();
+    }
+    private String reverseWords2(String s) {
+        String[] strs = s.trim().split("\\s");
+        List<String> sa = Arrays.asList(strs);
+        Collections.reverse(sa);
+        return String.join(" ",sa);
+    }
 }
