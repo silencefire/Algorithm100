@@ -1,7 +1,7 @@
 package demos;
 
 import java.util.*;
-import java.util.stream.Stream;
+import java.util.stream.Collectors;
 
 /**
  * 主要记录LeeCode中的相关题目，暂无分类
@@ -9,7 +9,7 @@ import java.util.stream.Stream;
 public class DemoA2 {
     public static void main(String[] args) {
         DemoA2 d2 = new DemoA2();
-        d2.ti4();
+        d2.ti5();
     }
     /**
      * @description:  圆圈中最后剩下的数字
@@ -140,12 +140,11 @@ public class DemoA2 {
     }
 
     /**
-     * @description:
-     * 给你一个字符串 s ，请你反转字符串中 单词 的顺序。
+     * @description: 给你一个字符串 s ，请你反转字符串中 单词 的顺序。
      * 单词 是由非空格字符组成的字符串。s 中使用至少一个空格将字符串中的 单词 分隔开。
      * 返回 单词 顺序颠倒且 单词 之间用单个空格连接的结果字符串。
      *方法一：使用split，然后翻转
-     *方法二：参考官方解法，使用api：包括：字符串分数组split，数组转list，集合工具类的使用，String类的静态方法；
+     *方法二：参考官方解法，使用api：包括：字符串分数组split，数组转list（在int数组时慎不能用，要包装Integer），集合工具类的使用，String类的静态方法；
      * 个人看了一些解法：发现没有特别好的，效率基本差不太多，都是O(N)，所以暂时没必要纠结用api还是自己手动写细节了；
      * 注意：输入字符串 s中可能会存在前导空格、尾随空格或者单词间的多个空格。返回的结果字符串中，单词间应当仅用单个空格分隔，且不包含任何额外的空格。
      * @author: zhenghm
@@ -169,5 +168,60 @@ public class DemoA2 {
         List<String> sa = Arrays.asList(strs);
         Collections.reverse(sa);
         return String.join(" ",sa);
+    }
+    
+    /**
+     * @description:  给你一个整数数组 nums ，你需要找出一个 连续子数组 ，如果对这个子数组进行升序排序，那么整个数组都会变为升序排序
+     * @author: zhenghm
+     * @time: 2022/12/11
+     *
+     * 第一种解法：用java的api，先找到排好序的数组，然后比对前后，但是效率最低   时间：19ms
+     * 第二种解法：模拟冒泡排序，将需要排序的算进去，这个更慢...时间：344ms
+     * 第三种解法：
+     */
+    private void ti5(){
+        System.out.println("连续子数组大小为："+findUnsortedSubarray2(new int[]{2,6,4,8,10,9,15}));
+        System.out.println("连续子数组大小为："+findUnsortedSubarray2(new int[]{1,2,3,3}));
+    }
+    private int findUnsortedSubarray(int[] nums){
+        int[] temp = new int[nums.length];
+        int c=0;
+        for(int in : nums){
+            temp[c++] = in;
+        }
+        Arrays.sort(temp);
+        List<Integer> list = Arrays.stream(temp).boxed().collect(Collectors.toList());//int[]转arrays必用
+        for(int i=0;i<nums.length;i++){
+            if(list.get(0)==nums[i]){
+                list.remove(0);
+            }else{
+                break;
+            }
+        }
+        if(list.size()!=0){
+            for(int j=nums.length-1;j>=0;j--){
+                if(list.get(list.size()-1) == nums[j]){
+                    list.remove(list.size()-1);
+                }else{
+                    break;
+                }
+            }
+        }
+        return list.size();
+    }
+    private int findUnsortedSubarray2(int[] nums){
+        List<Integer> list = new ArrayList<>();
+        for(int i=0;i<nums.length;i++){
+            for(int j=0;j<nums.length;j++){
+                if(!((i>=j && nums[i]>=nums[j]) || (i<j && nums[i]<=nums[j]))){
+                    list.add(i);
+                    break;
+                }
+            }
+        }
+        if(list.size()>1){
+            return Collections.max(list)-Collections.min(list)+1;
+        }
+        return list.size();
     }
 }
