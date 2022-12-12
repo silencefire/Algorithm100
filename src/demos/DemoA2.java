@@ -177,11 +177,20 @@ public class DemoA2 {
      *
      * 第一种解法：用java的api，先找到排好序的数组，然后比对前后，但是效率最低   时间：19ms
      * 第二种解法：模拟冒泡排序，将需要排序的算进去，这个更慢...时间：344ms
-     * 第三种解法：
+     * 第三种解法：对第一种解法的优化，使用whhile替代for实现中断，使用了System.copy来复制数组，不适用原有数组地址
+     * 做这种题可以把部分特殊的情况排除掉，不用做复杂的操作，会快很多；比如代码块里的；
+     * 第四种做法：跟解法二的思想类似，但是不用api，全部简化为一个for循环；思想如下：（用到了贪心思想，不断找最大/小值）
+     *  将数组分为三部分，A,B,C  其中B就是连续子数组；
+     *  那么A中的所有元素的最大值，比B中的所有元素都小于等于；
+     *  同理C中的所有元素的最小值，比B中的所有元素都大于等于；
+     *  所以设定两个游标s1和s2，分别从数组的前后遍历（这里可以用一个for循环完成，下表需要控制）；
+     *  从前向后，确定比最大值小的最后一个元素的位置，确定B数组的右边界；
+     *  从后向前，确定比最小值大的最后一个元素的位置，确定B数组的左边界；
+     *  去顶之后，相减就是B部分
      */
     private void ti5(){
-        System.out.println("连续子数组大小为："+findUnsortedSubarray2(new int[]{2,6,4,8,10,9,15}));
-        System.out.println("连续子数组大小为："+findUnsortedSubarray2(new int[]{1,2,3,3}));
+        System.out.println("连续子数组大小为："+findUnsortedSubarray4(new int[]{2,6,4,8,10,9,15}));
+        System.out.println("连续子数组大小为："+findUnsortedSubarray4(new int[]{1,2,3,3}));
     }
     private int findUnsortedSubarray(int[] nums){
         int[] temp = new int[nums.length];
@@ -223,5 +232,50 @@ public class DemoA2 {
             return Collections.max(list)-Collections.min(list)+1;
         }
         return list.size();
+    }
+    private int findUnsortedSubarray3(int[] nums){
+        //这里可以写成一个工具方法，为了整体性，就写在一起了，放在了代码块里
+        {
+            boolean isSorted = true;
+            for(int i=0;i<nums.length-1;i++){
+                if(nums[i]>nums[i+1]){
+                    isSorted = false;
+                    break;
+                }
+            }
+            if(isSorted){
+                return 0;
+            }
+        }
+
+        int[] numsSorted = new int[nums.length];
+        System.arraycopy(nums,0,numsSorted,0,nums.length);
+        Arrays.sort(numsSorted);
+        int start = 0;
+        while(nums[start] == numsSorted[start]){
+            start++;
+        }
+        int end = nums.length-1;
+        while(nums[end] == numsSorted[end]){
+            end--;
+        }
+        return end-start+1;
+    }
+    private int findUnsortedSubarray4(int[] nums){
+        int minnum = Integer.MAX_VALUE,start = -1;
+        int maxnum = Integer.MIN_VALUE,end = -1;
+        for(int i=0;i<nums.length;i++){
+            if(maxnum>nums[i]){
+                end = i;//遍历整个数组找到最后一个，比最大值小的元素，这个就是end；从前往后找最大的元素；
+            }else{
+                maxnum = nums[i];//不断更新最大的元素
+            }
+            if(minnum<nums[nums.length-i-1]){//从后往前遍历，找到最后一个，比最小值大的元素。这个就是start;
+                start = nums.length-i-1;
+            }else{
+                minnum = nums[nums.length-i-1];
+            }
+        }
+        return end == -1 ?0 : end-start+1;
     }
 }
