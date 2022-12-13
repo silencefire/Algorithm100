@@ -9,7 +9,7 @@ import java.util.stream.Collectors;
 public class DemoA2 {
     public static void main(String[] args) {
         DemoA2 d2 = new DemoA2();
-        d2.ti5();
+        d2.ti6();
     }
     /**
      * @description:  圆圈中最后剩下的数字
@@ -277,5 +277,39 @@ public class DemoA2 {
             }
         }
         return end == -1 ?0 : end-start+1;
+    }
+    
+    /**
+     * @description:  字符串的最大公因子
+     * 对于字符串s和t，只有在s = t + ... + t（t 自身连接 1 次或多次）时，我们才认定“t 能除尽 s”。
+     * 给定两个字符串str1和str2。返回 最长字符串x，要求满足x 能除尽 str1 且X 能除尽 str2
+     * @author: zhenghm
+     * @time: 2022/12/13
+     *
+     * 方法一：我的思路，使用api的replaceAll，但是效率极低；耗时887 ms；
+     * 方法二：不用api，手工解决，
+     */
+    private void ti6(){
+        System.out.println(gcdOfStrings("ABCABC","ABC"));
+        System.out.println(gcdOfStrings("ABABABAB","ABAB"));
+        System.out.println(gcdOfStrings("LEET","CODE"));
+    }
+    private String gcdOfStrings(String str1, String str2) {
+        char[] chars = str1.length()<=str2.length() ? str1.toCharArray() : str2.toCharArray();
+        StringBuilder sb = new StringBuilder();
+        String str = "";
+        String res = "";
+        for(Character c : chars){
+            sb.append(c);
+            str = sb.toString();
+            if(str1.replaceAll(str,"").length() == 0 && str2.replaceAll(str,"").length() == 0){
+                res = str;
+            }
+        }
+        return res;
+    }
+    private String gcdOfStrings2(String str1, String str2) {
+        String res = "";
+        return res;
     }
 }
