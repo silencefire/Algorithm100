@@ -280,19 +280,23 @@ public class DemoA2 {
     }
     
     /**
-     * @description:  字符串的最大公因子
+     * @description:  字符串的最大公因子/最大公约数
      * 对于字符串s和t，只有在s = t + ... + t（t 自身连接 1 次或多次）时，我们才认定“t 能除尽 s”。
      * 给定两个字符串str1和str2。返回 最长字符串x，要求满足x 能除尽 str1 且X 能除尽 str2
      * @author: zhenghm
      * @time: 2022/12/13
      *
      * 方法一：我的思路，使用api的replaceAll，但是效率极低；耗时887 ms；
-     * 方法二：不用api，手工解决，
+     * 方法二：不用api，手工解决，思路：遍历较短的字符串，从后到前截取字符串，看是否可以除尽两个字符串的长度，用于排除大部分不符情况；
+     * 比较的方法也比较有意思，用的不是切割原有字符串，而是拼接新的字符串然后进行对比，
+     * 因为是从大到小遍历的，所以第一次遍历到的就是符合情况的，耗时1ms、
+     * 值得学习的思想：采用数学的思想先剔除大部分不符合的情况，再用api来逐个对比，效率高了很多倍，而且从后往前遍历，第一遍历就出结果，不用遍历其他情况；
+     * 方法三：使用最大公约数，原谅我太菜，没看懂，明天继续看，但是后半部分对比是否可以整除用的也是stringBuilder拼接的方法；
      */
     private void ti6(){
-        System.out.println(gcdOfStrings("ABCABC","ABC"));
-        System.out.println(gcdOfStrings("ABABABAB","ABAB"));
-        System.out.println(gcdOfStrings("LEET","CODE"));
+        System.out.println(gcdOfStrings2("ABCABC","ABC"));
+        System.out.println(gcdOfStrings2("ABABABABAB","ABAB"));
+        System.out.println(gcdOfStrings2("LEET","CODE"));
     }
     private String gcdOfStrings(String str1, String str2) {
         char[] chars = str1.length()<=str2.length() ? str1.toCharArray() : str2.toCharArray();
@@ -308,8 +312,33 @@ public class DemoA2 {
         }
         return res;
     }
+
     private String gcdOfStrings2(String str1, String str2) {
-        String res = "";
-        return res;
+        int len1 = str1.length(),len2 = str2.length();
+        int length = Math.min(len1,len2);
+        String str;
+        for(int i = length;i>=1;i--){
+            if(len1%i == 0 && len2%i == 0){  //用长度来过滤大部分不符合的情况，提高遍历效率
+                str = str1.substring(0,i);
+                if(checkStringDivide(str,str1) && checkStringDivide(str,str2)){
+                    return str;
+                }
+            }
+        }
+        return "";
+    }
+    //用这个方法也比我的repalceall快很多；有空看下repalceAll的实现方法
+    private boolean checkStringDivide(String strMin,String str){
+        int num = str.length()/strMin.length();
+        StringBuilder sb = new StringBuilder();
+        for(int i=0 ;i<num;i++){
+            sb.append(strMin);
+        }
+        if(str.equals(sb.toString())){
+            return true;
+        }else{
+            return false;
+        }
+
     }
 }
