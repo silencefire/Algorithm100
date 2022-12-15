@@ -291,12 +291,19 @@ public class DemoA2 {
      * 比较的方法也比较有意思，用的不是切割原有字符串，而是拼接新的字符串然后进行对比，
      * 因为是从大到小遍历的，所以第一次遍历到的就是符合情况的，耗时1ms、
      * 值得学习的思想：采用数学的思想先剔除大部分不符合的情况，再用api来逐个对比，效率高了很多倍，而且从后往前遍历，第一遍历就出结果，不用遍历其他情况；
-     * 方法三：使用最大公约数，原谅我太菜，没看懂，明天继续看，但是后半部分对比是否可以整除用的也是stringBuilder拼接的方法；
+     * 方法三：使用两条性质，具体推理就不说了太多了，坦白说这两个性质都不懂，推理逻辑上感觉不通；先记下吧，需要的时候研究；
+     * 性质1：如果存在一个符合要求的字符串 X，那么也一定存在一个符合要求的字符串 X'，它的长度为 str1 和 str2 长度的最大公约数
+     *      用性质1不用遍历直接找到对应字符串，再用checkStringDivide校验；
+     *      这个也叫做：“辗转相除法”，我理解就是利用递归；
+     *      最大公约数公式： gcd(int a,int b)= b==0?a:gcd(b,a%b);//也就是如果存在最大公约数，就一定是这个长度，否则没有；
+     * 性质2：：如果 str1 和 str2 拼接后等于 str2和 str1 拼接起来的字符串（注意拼接顺序不同），那么一定存在符合条件的字符串 X
+     *      用性质2来避免checkStringDivide方法的验证，如果正反相等，则一定有最大公约数字符串x；
      */
     private void ti6(){
         System.out.println(gcdOfStrings2("ABCABC","ABC"));
         System.out.println(gcdOfStrings2("ABABABABAB","ABAB"));
         System.out.println(gcdOfStrings2("LEET","CODE"));
+        System.out.println(gcd(3,8));
     }
     private String gcdOfStrings(String str1, String str2) {
         char[] chars = str1.length()<=str2.length() ? str1.toCharArray() : str2.toCharArray();
@@ -341,4 +348,25 @@ public class DemoA2 {
         }
 
     }
+
+    //方法三
+    private String gcdOfStrings3(String str1, String str2){
+        int len1 = str1.length(), len2 = str2.length();
+        String T = str1.substring(0, gcd(len1, len2));
+        if (checkStringDivide(T, str1) && checkStringDivide(T, str2)) {
+            return T;
+        }
+        return "";
+    }
+    private int gcd(int a,int b){ //最大公约数
+        return b==0?a:gcd(b,a%b);
+    }
+    //方法四
+    private String gcdOfStrings4(String str1, String str2){
+        if (!str1.concat(str2).equals(str2.concat(str1))) {
+        return "";
+    }
+        return str1.substring(0, gcd(str1.length(), str2.length()));
+    }
+
 }
