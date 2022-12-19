@@ -369,4 +369,16 @@ public class DemoA2 {
         return str1.substring(0, gcd(str1.length(), str2.length()));
     }
 
+    /**
+     * @description: 残血状态回归，阳了三天，抓紧补上一部分
+     * @author: zhenghm
+     * @time: 2022/12/19
+     */
+    private void ti7(){
+
+    }
+    private void ti8(){
+
+    }
+
 }
