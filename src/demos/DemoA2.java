@@ -369,8 +369,11 @@ public class DemoA2 {
         return str1.substring(0, gcd(str1.length(), str2.length()));
     }
 
-    /**
-     * @description: 残血状态回归，阳了三天，抓紧补上一部分
+    /** 残血状态回归，阳了三天，抓紧补上一部分
+     * @description: 有效括号的嵌套度
+     * 有效括号字符串 定义：对于每个左括号，都能找到与之对应的右括号
+     * 嵌套深度 depth 定义：即有效括号字符串嵌套的层数
+     * 给你一个「有效括号字符串」 seq，请你将其分成两个不相交的有效括号字符串，A 和 B，并使这两个字符串的深度最小
      * @author: zhenghm
      * @time: 2022/12/19
      */
