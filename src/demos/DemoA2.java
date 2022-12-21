@@ -9,7 +9,7 @@ import java.util.stream.Collectors;
 public class DemoA2 {
     public static void main(String[] args) {
         DemoA2 d2 = new DemoA2();
-        d2.ti6();
+        d2.ti7();
     }
     /**
      * @description:  圆圈中最后剩下的数字
@@ -374,11 +374,43 @@ public class DemoA2 {
      * 有效括号字符串 定义：对于每个左括号，都能找到与之对应的右括号
      * 嵌套深度 depth 定义：即有效括号字符串嵌套的层数
      * 给你一个「有效括号字符串」 seq，请你将其分成两个不相交的有效括号字符串，A 和 B，并使这两个字符串的深度最小
+     *   不相交：每个 seq[i] 只能分给 A 和 B 二者中的一个，不能既属于 A 也属于 B 。
+     *   A 或 B 中的元素在原字符串中可以不连续。
+     *   A.length + B.length = seq.length
+     *   深度最小：max(depth(A), depth(B)) 的可能取值最小
+     *
+     * 解决思路：让连续的“左括号”不能出现在一个数组里；
+     * 里面有的人为了提高难度使用了栈，其实作用一样，都是计数；
      * @author: zhenghm
      * @time: 2022/12/19
      */
     private void ti7(){
-
+        System.out.println(Arrays.toString(maxDepthAfterSplit("(()())")));
+        System.out.println(Arrays.toString(maxDepthAfterSplit("()(())(())()(()(((()))))")));
+    }
+    private int[] maxDepthAfterSplit(String seq) {
+        //首先排除空串
+        if(seq.trim().length() == 0){
+            return null;
+        }
+        /*
+         * 用其所在的深度来判断是否连在一起，如果连在一起，必然深度不一样；所以，深度为偶数的，放在B组，深度为奇数的，放在A组；
+         * 对于左括号，可以上述处理
+         * 对于右括号，为了保证在A/B中不会出现)(，这种情况，所以都是一个(，对应一个)。于是直接可将其放置为深度为上一(深度的组里；然后深度-1；
+         */
+        char[] chars = seq.toCharArray();
+        int[] res = new int[chars.length];
+        int dep = 0;
+        for(int i=0;i<chars.length;i++){
+            if(chars[i]=='('){
+                ++dep;
+                res[i] = dep%2;
+            }else{
+                res[i] = dep%2;
+                dep--;
+            }
+        }
+        return res;
     }
     private void ti8(){
 
