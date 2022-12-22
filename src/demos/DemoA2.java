@@ -9,7 +9,7 @@ import java.util.stream.Collectors;
 public class DemoA2 {
     public static void main(String[] args) {
         DemoA2 d2 = new DemoA2();
-        d2.ti7();
+        d2.ti8();
     }
     /**
      * @description:  圆圈中最后剩下的数字
@@ -412,8 +412,42 @@ public class DemoA2 {
         }
         return res;
     }
+
+    /**
+     * @description: 有个马戏团正在设计叠罗汉的表演节目，一个人要站在另一人的肩膀上。出于实际和美观的考虑，在上面的人要比下面的人矮一点且轻一点。
+     * 已知马戏团每个人的身高和体重，请编写代码计算叠罗汉最多能叠几个人。
+     *
+     * 我的做法不对，本来想利用map直接处理
+     * 解题思路：找最大子序列；
+     *
+     * @author: zhenghm
+     * @time: 2022/12/22
+     */
     private void ti8(){
+//        System.out.println(bestSeqAtIndex(new int[]{65,70,56,75,60,68},new int[]{100,150,90,190,95,11}));
+        System.out.println(bestSeqAtIndex(new int[]{2868,5485,1356,1306,6017,8941,7535,4941,6331,6181},new int[]{5042,3995,7985,1651,5991,7036,9391,428,7561,8594}));
+
 
     }
 
+    /*
+     * 错误做法示例，正确做法没看明白，明天看
+     */
+    public int bestSeqAtIndex(int[] height, int[] weight) {
+        Map<Integer,Integer> maps = new HashMap<>();
+        List<Integer> lists = new ArrayList<>();
+        for(int i=0;i<height.length;i++){
+            maps.put(height[i],weight[i]);
+            lists.add(height[i]);
+        }
+        Collections.sort(lists);
+        int temp = 0,count =0;
+        for(Integer h : lists){
+            if(temp<=h && maps.getOrDefault(temp,0)<=maps.get(h)){
+                count++;
+                temp = h;
+            }
+        }
+        return count;
+    }
 }
