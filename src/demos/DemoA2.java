@@ -414,24 +414,26 @@ public class DemoA2 {
     }
 
     /**
-     * @description: 有个马戏团正在设计叠罗汉的表演节目，一个人要站在另一人的肩膀上。出于实际和美观的考虑，在上面的人要比下面的人矮一点且轻一点。
+     * @description: 马戏团人塔
+     * 有个马戏团正在设计叠罗汉的表演节目，一个人要站在另一人的肩膀上。出于实际和美观的考虑，在上面的人要比下面的人矮一点且轻一点。
      * 已知马戏团每个人的身高和体重，请编写代码计算叠罗汉最多能叠几个人。
      *
      * 我的做法不对，本来想利用map直接处理
-     * 解题思路：找最大子序列；
+     * 解题思路：找最大子序列；使用Arrays的二分查找方法，binarySearch；
+     *   先将[身高,体重]进行排序，身高升序，体重降序（身高相同时）
+     *   然后找一个数组dp，专门存放“体重”，对上面的数组进行遍历，存放体重的正确排序，这样不断替换体重
+     *   最后，计算dp的数组中实际存的数据数量，就是符合条件的数据；
      *
      * @author: zhenghm
      * @time: 2022/12/22
      */
     private void ti8(){
 //        System.out.println(bestSeqAtIndex(new int[]{65,70,56,75,60,68},new int[]{100,150,90,190,95,11}));
-        System.out.println(bestSeqAtIndex(new int[]{2868,5485,1356,1306,6017,8941,7535,4941,6331,6181},new int[]{5042,3995,7985,1651,5991,7036,9391,428,7561,8594}));
-
-
+        System.out.println(bestSeqAtIndex2(new int[]{2868,5485,1356,1306,6017,8941,7535,4941,6331,6181},new int[]{5042,3995,7985,1651,5991,7036,9391,428,7561,8594}));
     }
 
     /*
-     * 错误做法示例，正确做法没看明白，明天看
+     * 错误做法示例，正确做法只能理解，借鉴
      */
     public int bestSeqAtIndex(int[] height, int[] weight) {
         Map<Integer,Integer> maps = new HashMap<>();
@@ -450,4 +452,30 @@ public class DemoA2 {
         }
         return count;
     }
-}
+
+    /*
+     *关于Arrays.binarySearch方法的补充：使用二进制搜索算法搜索指定值的指定数组的范围。
+     * 1.在范围内搜索到该目标：返回目标的数组下标
+     * 2.如果数组中不存在该元素，则会返回 -(插入点 + 1)
+     *    2.1要搜索的目标比搜索范围的数字都大：返回：(上限实际下标+1)的负值
+     *    2.2要搜索的目标比搜索范围的数字都小，返回：(下限下标+1)的负值
+     *    2.3要搜索的目标在范围内：返回：最后中间值+1的负值
+     */
+    public int bestSeqAtIndex2(int[] height,int[] weight){
+        int len = height.length;
+        int[][] person = new int[len][2];
+        for (int i = 0; i < len; ++i)
+            person[i] = new int[]{height[i], weight[i]};
+        Arrays.sort(person, (a, b) -> a[0] == b[0] ? b[1] - a[1] : a[0] - b[0]);
+        int[] dp = new int[len];
+        int res = 0;
+        for (int[] pair : person) {//pair[1]表示“体重weight”
+            int i = Arrays.binarySearch(dp, 0, res, pair[1]);//这里表示的是从dp数组里找有没有相应的weight体重
+            if (i < 0)//没找到
+                i = -(i + 1);//根据binarySearch找对对应的实际应该插入的下标
+            dp[i] = pair[1];//进行插入
+            if (i == res)
+                ++res;//如果插入的值正好是原来为0的数据，则计数+1
+        }
+        return res;
+    }}
