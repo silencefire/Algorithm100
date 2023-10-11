@@ -1,4 +1,4 @@
-package demos;
+package com.algorithm.demos;
 
 import java.util.*;
 
