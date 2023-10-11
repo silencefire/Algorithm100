@@ -3,7 +3,7 @@ package demos;
 import java.util.*;
 
 /**
- * @description: 字符串操作
+ * @description: 字符串操作算法题目
  * 问题注意点：
  * 1.边界值，需要自测
  * 2.注意输入的循环用for(sc.hasNext())
